@@ -2,22 +2,14 @@ const io = require('./ws').io;
 const {HELLO} = require('./Events');
 const zerorpc = require('zerorpc');
 
-const dbknex = {
-    client: 'mysql',
-    connection: {
-        host: '35.204.124.30',
-        user: 'root',
-        password: 'admin',
-        database: 'new_schema'
-    }
-};
+const dbknex = require('./config').database();
 
 const knex = require('knex')(dbknex);
 
 module.exports = async function(socket) {
     var client = new zerorpc.Client();
 //console.log(client);
-    client.connect("tcp://127.0.0.1:4242");
+    client.connect(require('./config').rpcEndpoint);
     console.log('socket id: ' + socket.id);
 await client.invoke('streaming_range', 1,2,3, (req, res) =>{console.log(res)});
 

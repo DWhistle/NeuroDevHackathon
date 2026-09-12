@@ -2,7 +2,7 @@ const app = require('express')()
 const http = require('http').createServer(app)
 const io = (module.exports.io = require('socket.io')(http))
 const socketManager = require('./socketManager');
-const PORT = 25565
+const PORT = process.env.WS_PORT || 25565
 
 //const socketManager = require('./socketManager')
 

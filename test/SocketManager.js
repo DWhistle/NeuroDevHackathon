@@ -6,7 +6,7 @@ const {PRISYAD, PRISYADONE} = require('./Events')
 module.exports = function(socket) {
 	console.log(socket);
   var client = new zerorpc.Client()
-  client.connect('tcp://127.0.0.1:4242')
+  client.connect(require('../config').rpcEndpoint)
   console.log('socket id: ' + socket.id)
 	socket.on('chat message', () => {
     console.log('CONNECT')

@@ -5,15 +5,7 @@ const app = require('express')();
 const mysql = require('mysql');
 const zerorpc = require('zerorpc');
 
-const dbknex = {
-    client: 'mysql',
-    connection: {
-        host: '35.204.124.30',
-        user: 'root',
-        password: 'admin',
-        database: 'new_schema'
-    }
-};
+const dbknex = require('./config').database();
 
 const knex = require('knex')(dbknex);
 
@@ -48,7 +40,7 @@ app.post('/input', async (req, res) => {
         //get BIG data from db and send to zerorpcserver
         //waiting rpc answer and send res to client!
 console.log(req.body.title, 'hi from finish');
-let kek = await axios.get('http://13.58.26.230:3035/' + req.body.title).then((item) => {console.log(item.data, 'from axios')}).catch((e)=> {console.log(e)});
+let kek = await axios.get((process.env.CLIENT_URL || 'http://127.0.0.1:3035') + '/' + req.body.title).then((item) => {console.log(item.data, 'from axios')}).catch((e)=> {console.log(e)});
 console.log(kek.data);   
 //io.on('TEST', (data) => {
 //console.log(data);
@@ -58,7 +50,7 @@ return res.send(kek.data);
 
 app.post('/get', async (req, res) =>{
 	console.log(req.body.id);
-	await axios.get('http://13.58.26.230:3035/get/' + req.body.id);
+	await axios.get((process.env.CLIENT_URL || 'http://127.0.0.1:3035') + '/get/' + req.body.id);
 let test;	
 io.on('TEST', (res) => {
 		console.log(res);
