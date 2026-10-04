@@ -1,0 +1,14 @@
+'use strict';
+const assert = require('node:assert/strict');
+const config = require('../config');
+for (const key of ['DB_USER', 'DB_PASSWORD', 'DB_NAME']) delete process.env[key];
+assert.throws(() => config.database(), /DB_USER/);
+process.env.DB_USER = 'synthetic';
+assert.throws(() => config.database(), /DB_PASSWORD/);
+process.env.DB_PASSWORD = 'REPLACE_LOCAL_PASSWORD';
+assert.throws(() => config.database(), /DB_PASSWORD/);
+process.env.DB_PASSWORD = 'synthetic-only';
+assert.throws(() => config.database(), /DB_NAME/);
+process.env.DB_NAME = 'synthetic';
+assert.equal(config.database().connection.database, 'synthetic');
+console.log('configuration validation: passed');

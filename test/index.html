@@ -24,7 +24,7 @@
 <!--<script src="/socket.io/socket.io.js"></script>-->
 
 <!--<script>-->
-<!--    var socket = io('http://localhost:3030');-->
+<!--    var socket = io();-->
 <!--    // socket.on('connect', function(){});-->
 <!--    // socket.on('event', function(data){});-->
 <!--    // socket.on('disconnect', function(){});-->
@@ -36,7 +36,7 @@
 
 <script>
     $(function () {
-        var socket = io('http://13.58.26.230:3030');
+        var socket = io();
         $('form').submit(function(e){
             e.preventDefault(); // prevents page reloading
             socket.emit('chat message', $('#m').val());

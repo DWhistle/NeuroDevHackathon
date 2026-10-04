@@ -1,7 +1,7 @@
 const app = require('express')();
-const PORT = process.env.PORT || 3035;
+const PORT = process.env.CLIENT_PORT || 3035;
 const client = require('socket.io-client');
-const socket = client('http://127.0.0.1:25565');
+const socket = client(process.env.WS_URL || 'http://127.0.0.1:25565');
 const axios = require('axios');
 
 app.get('/:id', (req, res) => {
